@@ -6,6 +6,9 @@ from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings, 
 from llama_index.core.node_parser import SentenceSplitter
 from llama_index.core.llms import ChatMessage
 
+#Import the schema
+from schema import RiskLevelOutput
+
 load_dotenv()
 
 cohere_api_key=os.getenv("COHERE_API_KEY")
@@ -57,8 +60,12 @@ messages = [
 ]
 
 #Specify the model
-llm= Cohere("command-a-03-2025")
+llm= Cohere("command-r-plus-08-2024")
 
-resp = llm.chat(messages)
+
+#Provide the pydantic class to the llm
+sllm=  llm.as_structured_llm(RiskLevelOutput)
+
+resp = sllm.chat(messages)
 
 print(resp)
