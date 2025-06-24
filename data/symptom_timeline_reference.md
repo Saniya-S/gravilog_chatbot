@@ -1,0 +1,13 @@
+# Symptom Timeline Reference (by Trimester)
+1. **First Trimester (Weeks 1–12)**
+- Risk: Miscarriage, Ectopic Pregnancy
+- Symptoms: Nausea, spotting, fatigue
+- Red flags: Severe pain, heavy bleeding, shoulder pain
+2. **Second Trimester (Weeks 13–27)**
+- Risk: Gestational Diabetes, Cervical Insufficiency
+- Symptoms: Baby movement begins (~20 weeks), increased appetite
+- Red flags: Lack of movement, contractions, leaking fluid
+3. **Third Trimester (Weeks 28–40+)**
+- Risk: Preeclampsia, Preterm Labor, Stillbirth
+- Symptoms: Heartburn, Braxton-Hicks, swelling
+- Red flags: Severe swelling, no fetal movement, bleeding

@@ -1,0 +1,6 @@
+llama-index
+cohere
+python-dotenv
+streamlit
+llama-index-llms-cohere
+llama-index-embeddings-cohere
