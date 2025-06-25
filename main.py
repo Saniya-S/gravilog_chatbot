@@ -39,33 +39,42 @@ else:
     index= VectorStoreIndex.from_documents(documents, transformations=[SentenceSplitter(chunk_size=1024, chunk_overlap=20)])
     index.storage_context.persist(persist_dir=storage_dir)
 
-# Query the user response
-user_response= "I have bleeding and it hurts a lot"
 
-query_engine= index.as_query_engine()
-#Convert the response into string (the response will be inserted into a prompt)
-response= str(query_engine.query(user_response))
-# print(response) SUCCESS
 
-#Message
-messages = [
+
+
+def get_structured_response(user_response):
+    # Convert the user_response into a single string
+    user_report= "\n".join([f"{a} {b}" for question in user_response for a, b in question.items()])
+
+    query_engine= index.as_query_engine()
+    #Convert the response into string (the response will be inserted into a prompt)
+    response= str(query_engine.query(user_report))
+
+    #Message
+    messages = [
     ChatMessage(role= "system", content="""You are a friendly and empathetic maternal health assistant trained on pregnancy
                  risk factors. When responding, use easy-to-understand, friendly, and empathetic language. The reponse should be 
                 a risk insights or suggestions the patient should take."""),
-    ChatMessage(role= "user", content=f"""The patient has reported the following: {user_response}. 
+    ChatMessage(role= "user", content=f"""The patient has reported the following: {user_report}. 
                 Relevent knowledge base {response}.
                 Based on the patient report and the knowledge base, respond with a risk assesment with suggestions the patient should 
                 take. When responding with risk insights, categorise them as low, medium or high risk.
                 Also provide an easy-to-understand explanation on why was this risk categorised as low, medium, or high. """)
-]
+    ]
+    #Specify the model
+    llm= Cohere("command-r-plus-08-2024")
 
-#Specify the model
-llm= Cohere("command-r-plus-08-2024")
+    #Provide the pydantic class to the llm
+    sllm=  llm.as_structured_llm(RiskLevelOutput)
+
+    resp = sllm.chat(messages)
+
+    return resp
 
 
-#Provide the pydantic class to the llm
-sllm=  llm.as_structured_llm(RiskLevelOutput)
 
-resp = sllm.chat(messages)
 
-print(resp)
+
+
+

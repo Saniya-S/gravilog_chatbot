@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+from main import get_structured_response
 
 st.title("GraviLog Bot")
 st.subheader("Let our bot triage your situation!")
@@ -63,7 +64,11 @@ if input := st.chat_input("Your response"):
     else:
         st.session_state.messages.append({"role":"assistant", "content": loading_message})
         with st.chat_message("assistant"):
-            st.markdown(loading_message)            
+            st.markdown(loading_message) 
+        # Getting structured risk assesment
+        risk_assesment= get_structured_response(st.session_state.responses)
+        with st.chat_message("assistant"):
+            st.markdown(risk_assesment)           
 
     
 
