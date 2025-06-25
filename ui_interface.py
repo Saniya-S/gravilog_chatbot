@@ -45,7 +45,7 @@ if input := st.chat_input("Your response"):
     st.session_state.messages.append({"role":"user", "content": input})
 
     #Save the input into responses
-    st.session_state.responses.append(input)
+    st.session_state.responses.append({st.session_state.pending_question:input})
 
     #Display user input
     with st.chat_message("user"):
@@ -63,7 +63,7 @@ if input := st.chat_input("Your response"):
     else:
         st.session_state.messages.append({"role":"assistant", "content": loading_message})
         with st.chat_message("assistant"):
-            st.markdown(loading_message)
+            st.markdown(loading_message)            
 
     
 
