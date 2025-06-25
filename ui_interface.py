@@ -29,6 +29,9 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+# Loading message
+loading_message= "Thank you for answering the question. I will not triage the situation. Please wait..."
+
 if "pending_question" not in st.session_state:
     st.session_state.pending_question = random.choice(questions)
 
@@ -53,10 +56,16 @@ if input := st.chat_input("Your response"):
 
     # Remaining questions
     remaining_questions= [q for q in questions if q not in st.session_state.asked_questions]
-    next_question= random.choice(remaining_questions) if remaining_questions else None
-    st.session_state.pending_question = next_question
+    if remaining_questions:
+        next_question= random.choice(remaining_questions) if remaining_questions else None
+        st.session_state.pending_question = next_question
+        st.rerun()
+    else:
+        st.session_state.messages.append({"role":"assistant", "content": loading_message})
+        with st.chat_message("assistant"):
+            st.markdown(loading_message)
 
-    st.rerun()
+    
 
     
 
