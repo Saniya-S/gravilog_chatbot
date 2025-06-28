@@ -69,8 +69,14 @@ def get_structured_response(user_response):
     sllm=  llm.as_structured_llm(RiskLevelOutput)
 
     resp = sllm.chat(messages)
+    print(type(resp.raw)) # Check if it is pydantic object, you have defined in your schema
+    print(resp.raw) # Access the data
 
-    return resp
+    # Convert into dict using .model_dump function from pydantic
+    resp_dict= resp.raw.model_dump()
+    print(resp_dict)
+
+    return resp_dict
 
 
 

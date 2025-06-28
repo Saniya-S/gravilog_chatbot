@@ -68,7 +68,21 @@ if input := st.chat_input("Your response"):
         # Getting structured risk assesment
         risk_assesment= get_structured_response(st.session_state.responses)
         with st.chat_message("assistant"):
-            st.markdown(risk_assesment)           
+            # st.markdown(risk_assesment)
+            risk_level= risk_assesment["risk_level"]
+            risk_color= "🟢" if risk_level == "Low" else "🟡" if risk_level == "Medium" else "🔴"
+            st.header(f"Risk Level: {risk_level} {risk_color}") 
+            st.divider()
+
+            st.subheader("Explanation:")        
+            st.markdown(risk_assesment["explanation"])
+
+            st.subheader("Suggestions:")
+            for s in risk_assesment["suggestions"]:      
+                st.markdown(f"- {s}") 
+            st.divider()
+            st.markdown("**Additional Notes**")  
+            st.markdown(risk_assesment["additional_notes"])     
 
     
 
