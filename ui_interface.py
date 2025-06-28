@@ -7,11 +7,18 @@ st.subheader("Let our bot triage your situation!")
 st.divider()
 
 #List of proactive questions
-questions=["Are you currently experiencing any unusual bleeding or discharge?", 
-           "How would you describe your baby’s movements today compared to yesterday?",
-           "Have you had any headaches that won’t go away or that affect your vision?",
-           "Do you feel any pressure or pain in your pelvis or lower back?",
-           "Have you had a fever or noticed any foul-smelling discharge?"]
+questions = [
+    "Are you currently experiencing any unusual bleeding or spotting?",
+    "How does your baby’s movement today feel compared to yesterday? More, less, or about the same?",
+    "Have you had any headaches that won’t go away?",
+    "Are you experiencing any changes in your vision, like blurriness or spots?",
+    "Do you feel any pressure or pain in your pelvic area?",
+    "Do you have pain in your lower back?",
+    "Have you had a fever recently?",
+    "Have you noticed any discharge with a bad or unusual smell?",
+    "Have you noticed sudden swelling in your hands, feet, or face?",
+    "Do you feel dizzy, faint, or lightheaded?"
+]
 
 # Function to display the risk assessment
 def display_risk_assessment(report):
@@ -67,9 +74,18 @@ for message in st.session_state.messages:
 # Loading message
 loading_message= "Thank you for answering the question. I will not triage the situation. Please wait..."
 
-# Intitialise pending_question
+# Intitialise pending_question (run only once)
 if "pending_question" not in st.session_state:
     st.session_state.pending_question = random.choice(questions)
+
+    # Add instruction to the user
+    intruction= """I’ll ask you a few short questions to understand how you’re feeling. Please answer in a sentence or two
+                 — the more details you share, the better I can help."""
+    # Display
+    with st.chat_message("assistant"):
+        st.markdown(f"*{intruction}*")
+    # Add to chat history
+    st.session_state.messages.append({"role":"assistant", "content": f"*{intruction}*"})
 
 if st.session_state.pending_question:
     with st.chat_message("assistant"):
