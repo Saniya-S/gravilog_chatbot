@@ -6,6 +6,23 @@ st.title("GraviLog Bot")
 st.subheader("Let our bot triage your situation!")
 st.divider()
 
+if st.button("🔄 Reset Chat"):
+    # Clear all relevant session state variables
+    for key in [
+            "messages",
+            "responses",
+            "asked_questions",
+            "pending_question",
+            "risk_analysis",
+            "follow_up_message",
+            "has_analysed"
+    ]:
+        if key in st.session_state:
+            del st.session_state[key]
+    # Force a rerun to refresh the app
+    st.rerun()
+    
+
 #List of proactive questions
 questions = [
     "Are you currently experiencing any unusual bleeding or spotting?",
