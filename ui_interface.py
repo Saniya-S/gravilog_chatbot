@@ -23,6 +23,14 @@ with col2:
         # Force a rerun to refresh the app
         st.rerun()
 st.subheader("Let our bot triage your situation!")
+st.markdown(
+    """
+    **Disclaimer:** *This assistant is for informational purposes only and does not replace professional medical advice. 
+    Always consult your healthcare provider if you have concerns.*
+    """,
+    help="This is not a substitute for medical care."
+)
+
 st.divider()
 
 
