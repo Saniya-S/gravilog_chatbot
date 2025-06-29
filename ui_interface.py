@@ -97,7 +97,7 @@ for message in st.session_state.messages:
 
 
 # Loading message
-loading_message= "Thank you for answering the question. I will not triage the situation. Please wait..."
+loading_message= "Thank you for answering the question. I will now triage the situation. This may take a few moments..."
 
 # Intitialise pending_question (run only once)
 if "pending_question" not in st.session_state:
