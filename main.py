@@ -67,7 +67,7 @@ def get_structured_response(user_input, use_structure= False, context= ""):
     
     # Follow-up prompt
     follow_up_user= ChatMessage(role= "assistant", content=f"""
-        This is the patients risk analysis report: {context}.
+        This is the patients risk analysis reporta and any related context: {context}.
         Upon reading this, the patient has asked the question: {user_input}.
         As a friendly and empathetic maternal health assistant, provide them answer to their query with easy-to-understand, friendly language,
         Ensure that you use, natural conversational tone when responding.""")

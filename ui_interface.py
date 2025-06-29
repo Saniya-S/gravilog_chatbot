@@ -39,16 +39,19 @@ def display_risk_assessment(report):
         st.markdown("**Additional Notes**")  
         st.markdown(report["additional_notes"])
 
+# initialise follow-up chat history for llm
+if "follow_up_message" not in st.session_state:
+    st.session_state.follow_up_message= []
 
-# Initialize chat history
+# Initialise chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Initialize responses (Track responses)
+# Initialise responses (Track responses)
 if "responses" not in st.session_state:
     st.session_state.responses = []
 
-# Initialize questions (Track asked question)
+# Initialise questions (Track asked question)
 if "asked_questions" not in st.session_state:
     st.session_state.asked_questions = []
 
@@ -144,18 +147,30 @@ if input := st.chat_input("Your response"):
                  
             st.session_state.has_analysed= True
         else:
-            # Append the follow-up question by the user
-            st.session_state.messages.append({"role":"user", "content": input})
+            # Append the follow-up question by the user in chat history (for display on UI)
+            st.session_state.messages.append({"role":"user", "content": input})  
 
             # Display to the user
             with st.chat_message("user"):
                 st.markdown(input)
 
             # Convert the risk_analysis dict into a single string
-            risk_analysis_str= "\n".join([f"{a}:{b}," for a,b in st.session_state.risk_analysis.items()])
-            # Send the follow-up question from the user to the LLM
-            llm_response= get_structured_response(user_input=input, context=risk_analysis_str)
+            context_str= "\n".join([f"{a}:{b}," for a,b in st.session_state.risk_analysis.items()])
 
+            # Concatenate only if there is past follow-up msgs
+            if len(st.session_state.follow_up_message) > 0:
+                context_str += "\n".join([f"{a}:{b}," for message in st.session_state.follow_up_message for a,b in message.items()])
+
+            # Send the follow-up question from the user to the LLM
+            llm_response= get_structured_response(user_input=input, context=context_str)
+
+            # Append the follow-up question by the user in the follow-up (for context for LLM)
+            st.session_state.follow_up_message.append({"role":"user", "content": input})
+            print("")
+
+             # Append the response by the LLM in the follow-up (for context for LLM)
+            st.session_state.follow_up_message.append({"role":"assistant", "content": llm_response})
+            
             # Append the LLM response to the session variable messages
             st.session_state.messages.append({"role":"assistant", "content": llm_response})
 
