@@ -53,24 +53,42 @@ def get_structured_response(user_input, use_structure= False, context= ""):
     response= str(query_engine.query(user_input))
 
     # The persona of the chatbot
-    system_message= ChatMessage(role= "system", content="""You are a friendly and empathetic maternal health assistant trained on pregnancy
-                 risk factors. When responding, use easy-to-understand, friendly, and empathetic language. The reponse should be 
-                a risk insights or suggestions the patient should take.""")
+    system_message= ChatMessage(role= "system", content="""You are a knowledgeable, friendly, and empathetic maternal health assistant trained on pregnancy risk factors.  
+                                When responding:
+                                - Always use clear, supportive, easy-to-understand language.
+                                - Keep answers concise and actionable.
+                                - Do not include greetings or sign-offs.
+                                - Provide practical next steps whenever possible.
+                                """)
     
     # Risk analysis prompt
     # Here, user_input are the questions and their answers by the user
-    risk_analysis_message= ChatMessage(role= "assistant", content=f"""The patient has reported the following: {user_input}. 
-                Relevent knowledge base {response}.
-                Based on the patient report and the knowledge base, respond with a risk assesment with suggestions the patient should 
-                take. When responding with risk insights, categorise them as low, medium or high risk.
-                Also provide an easy-to-understand explanation on why was this risk categorised as low, medium, or high. """)
+    risk_analysis_message= ChatMessage(role= "assistant", content=f"""The patient has reported the following: {user_input}
+
+                                        Relevant knowledge base: {response}
+
+                                        Based on this information:
+                                        - Provide a risk assessment, categorizing the risk as Low, Medium, or High.
+                                        - Explain clearly and simply why this risk level was chosen.
+                                        - Suggest practical next steps or actions the patient should take.
+                                        - Include any additional notes that offer reassurance, reminders, or other supportive advice.
+                                        - Keep the tone supportive and easy to understand.
+                                        """)
     
     # Follow-up prompt
     follow_up_user= ChatMessage(role= "assistant", content=f"""
-        This is the patients risk analysis reporta and any related context: {context}.
-        Upon reading this, the patient has asked the question: {user_input}.
-        As a friendly and empathetic maternal health assistant, provide them answer to their query with easy-to-understand, friendly language,
-        Ensure that you use, natural conversational tone when responding.""")
+        This is the patient’s risk analysis report and any related context: {context}.
+
+        The patient has now asked or said: {user_input}
+
+        Respond as a friendly and empathetic maternal health assistant, using clear and simple language.
+
+        - If the message is a follow-up question, answer naturally but keep it short and clear.
+        - If the message is just an acknowledgment (e.g., “okay”, “thanks”), respond briefly and do NOT restate previous information.
+        - Do not greet the patient again.
+        - Keep your tone warm and conversational, not repetitive.
+
+        """)
 
     #Specify the model
     llm= Cohere("command-r-plus-08-2024")
