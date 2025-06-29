@@ -29,11 +29,11 @@ documents = SimpleDirectoryReader("./data").load_data()
 storage_dir= "storage"
 if os.path.exists(storage_dir):
     # Load the stored indexed
-    print("Dir Exist")
+    # print("Dir Exist")
     storage_context = StorageContext.from_defaults(persist_dir=storage_dir)
     index= load_index_from_storage(storage_context)
 else:
-    print("Dir does not exist")
+    # print("Dir does not exist")
     os.makedirs(storage_dir, exist_ok=True)
     #Chunking and Indexing
     index= VectorStoreIndex.from_documents(documents, transformations=[SentenceSplitter(chunk_size=1024, chunk_overlap=20)])
@@ -98,8 +98,11 @@ def get_structured_response(user_input, use_structure= False, context= ""):
 
     if use_structure:
         resp = sllm.chat([system_message, risk_analysis_message])
-        print(type(resp.raw)) # Check if it is pydantic object, you have defined in your schema
-        print(resp.raw) # Access the data
+        # Check if it is pydantic object, you have defined in your schema
+        # print(type(resp.raw)) 
+        
+        # Access the data
+        # print(resp.raw) 
 
         # Convert into dict using .model_dump function from pydantic
         resp_dict= resp.raw.model_dump()

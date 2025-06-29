@@ -200,7 +200,7 @@ if input := st.chat_input("Your response"):
 
             # Append the follow-up question by the user in the follow-up (for context for LLM)
             st.session_state.follow_up_message.append({"role":"user", "content": input})
-            print("")
+            
 
              # Append the response by the LLM in the follow-up (for context for LLM)
             st.session_state.follow_up_message.append({"role":"assistant", "content": llm_response})
