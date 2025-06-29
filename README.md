@@ -48,7 +48,7 @@ Nope
 
 7. Do you feel dizzy, faint, or lightheaded?
 
-A slight lightheadedness
+I feel slightly lightheaded
 
 8. Are you experiencing any changes in your vision, like blurriness or spots?
 
@@ -93,6 +93,7 @@ The bot also supports simple follow-up questions, for example:
 
 - “What should I do if I feel dizzy later?”
 
+Follow-ups help users understand the risk insights in plain terms.
 
 **Example Follow-up**
 
@@ -163,4 +164,4 @@ Open the local URL that Streamlit shows in your terminal
 
 - The entire medical content powering this bot comes from GraviLog’s provided knowledge base.
 
-- This is not a substitute for medical advice. Users should always consult their healthcare provider for urgent concerns.
+- This tool is for educational and triage assistance only, it does not replace professional medical advice.
