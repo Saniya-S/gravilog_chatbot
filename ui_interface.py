@@ -154,12 +154,16 @@ if input := st.chat_input("Your response"):
             with st.chat_message("user"):
                 st.markdown(input)
 
+
             # Convert the risk_analysis dict into a single string
-            context_str= "\n".join([f"{a}:{b}," for a,b in st.session_state.risk_analysis.items()])
+            context_str= "Risk Analysis \n" + "\n".join([f"{a}:{b}," for a,b in st.session_state.risk_analysis.items()])
 
             # Concatenate only if there is past follow-up msgs
             if len(st.session_state.follow_up_message) > 0:
-                context_str += "\n".join([f"{a}:{b}," for message in st.session_state.follow_up_message for a,b in message.items()])
+                context_str += "\n" + "\n".join(
+                        [f"{a.capitalize()}: {b}" for message in st.session_state.follow_up_message for a, b in message.items()]
+                    )
+
 
             # Send the follow-up question from the user to the LLM
             llm_response= get_structured_response(user_input=input, context=context_str)
