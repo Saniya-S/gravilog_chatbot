@@ -2,25 +2,30 @@ import streamlit as st
 import random
 from main import get_structured_response
 
-st.title("GraviLog Bot")
+col1, col2 = st.columns(2, gap="large", vertical_alignment="bottom")
+with col1:
+    st.title("GraviLog Bot")
+
+with col2:
+    if st.button("Reset Chat"):
+    # Clear all relevant session state variables
+        for key in [
+                "messages",
+                "responses",
+                "asked_questions",
+                "pending_question",
+                "risk_analysis",
+                "follow_up_message",
+                "has_analysed"
+        ]:
+            if key in st.session_state:
+                del st.session_state[key]
+        # Force a rerun to refresh the app
+        st.rerun()
 st.subheader("Let our bot triage your situation!")
 st.divider()
 
-if st.button("🔄 Reset Chat"):
-    # Clear all relevant session state variables
-    for key in [
-            "messages",
-            "responses",
-            "asked_questions",
-            "pending_question",
-            "risk_analysis",
-            "follow_up_message",
-            "has_analysed"
-    ]:
-        if key in st.session_state:
-            del st.session_state[key]
-    # Force a rerun to refresh the app
-    st.rerun()
+
     
 
 #List of proactive questions
