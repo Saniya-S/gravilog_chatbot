@@ -133,11 +133,17 @@ conda activate gravilog-env
 ```bash
 pip install -r requirements.txt
 ```
-5. Run the app
+5. Add your Cohere API Key
+Create a .env file in the root directory:
+```bash
+COHERE_API_KEY=your_cohere_api_key_here
+```
+
+6. Run the app
 ```bash
 streamlit run ui_interface.py
 ```
-5. Access the app
+7. Access the app
 Open the local URL that Streamlit shows in your terminal
 
 
