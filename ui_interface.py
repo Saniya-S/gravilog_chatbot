@@ -96,7 +96,7 @@ loading_message= "Thank you for answering the question. I will not triage the si
 
 # Intitialise pending_question (run only once)
 if "pending_question" not in st.session_state:
-    st.session_state.pending_question = random.choice(questions)
+    st.session_state.pending_question = "Can you tell me how many weeks pregnant you are right now? An estimate is fine if you’re not certain."
 
     # Add instruction to the user
     intruction= """I’ll ask you a few short questions to understand how you’re feeling. Please answer in a sentence or two
