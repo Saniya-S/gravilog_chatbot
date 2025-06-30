@@ -184,9 +184,12 @@ if input := st.chat_input("Your response"):
             with st.chat_message("user"):
                 st.markdown(input)
 
+            # Get the gestation period from the responses
+            gestation_period=  list(st.session_state.responses[0].values())[0]
 
             # Convert the risk_analysis dict into a single string
-            context_str= "Risk Analysis \n" + "\n".join([f"{a}:{b}," for a,b in st.session_state.risk_analysis.items()])
+            context_str= "Risk Analysis \n" + f"Gestation period: {gestation_period} \n" + "\n".join([f"{a}:{b}," for a,b in st.session_state.risk_analysis.items()])
+
 
             # Concatenate only if there is past follow-up msgs
             if len(st.session_state.follow_up_message) > 0:
